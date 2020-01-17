@@ -1,21 +1,20 @@
-const express = require('express');
+var express = require('express'),
+    path = require('path');
+//
+var app = express();
 
-//Start App
-const app = express();
+app.use(express.static(path.join(__dirname,'public')));
 
-//Server port
-let portNum = 3004;
-let port = process.env.PORT || portNum;
-
-app.get('/', function(req,res){
-    res.sendFile("/Users/adarsh/Desktop/GitHub Projects/Template-OnePage/modules/app/client/view/home.html");
+app.use('/', function(req,res){
+    res.sendFile('./public/views/main.html', {root: __dirname});
 });
 
-app.get('*', function(req, res){
-    res.send('404 Error');
-});
+//Port
+var portNum = 3004;
+var port = process.env.PORT || portNum;
 
-//Start Server
-let server = app.listen(port, function(req,res){
-    console.log('Server listening to port', portNum);
+
+//Server start
+var server = app.listen(port, function(){
+    console.log('Server listening to port ', portNum);
 });
